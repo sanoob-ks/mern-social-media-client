@@ -2,7 +2,7 @@ import Online from '../online/Online'
 import './rightbar.css'
 import { Users } from '../../dummyData'
 
-function homeRightbar() {
+function HomeRightbar() {
   return (
     <>
       <div className="bithdayContainer">
@@ -67,11 +67,11 @@ const ProfileRightbar=()=>{
   )
 }
 
-function Rightbar() {
+function Rightbar({profile}) {
   return (
     <div className='rightbar'>
       <div className="rightbarWrapper">
-          <ProfileRightbar/>
+          {profile?<ProfileRightbar/>:<HomeRightbar/>}
       </div>
     </div>
   )
