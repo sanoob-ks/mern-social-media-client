@@ -1,4 +1,5 @@
 import './friend.css'
+import React from "react"
 
 
 function Friend({user}) {

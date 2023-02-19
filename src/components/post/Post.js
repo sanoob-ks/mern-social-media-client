@@ -1,11 +1,22 @@
 import './post.css'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import {Users} from '../../dummyData'
-import {useState} from 'react'
+import React, { useEffect, useState } from "react"
+import axios from 'axios'
+import {format} from "timeago.js"
+import {Link} from "react-router-dom"
 function Post({postDetails}) {
-  const user= Users.filter(u=>u.id===postDetails.userId)
-  const [like,setLike]=useState(postDetails.like)
+  const [like,setLike]=useState(postDetails.like.length)
   const [isLiked,setIsLiked]=useState(false)
+  const [user,setUser]=useState({})
+
+  useEffect(()=>{
+    const fetchUser=async()=>{
+      const res=await axios.get(`/user?userId=${postDetails.userId}`)
+      setUser(res.data);
+    }
+    fetchUser()
+    
+  },[])
 
   const handleLiked=()=>{
     setLike(isLiked? like-1 :like+1)
@@ -17,9 +28,11 @@ function Post({postDetails}) {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <img src={user[0].profilePicture} alt="" className="postProfileImg" />
-            <span className="postUsername">{user[0].username}</span>
-            <span className="postDate">{postDetails.date}</span>
+            <Link to={`/profile/${user.username}`} className="postLink">
+              <img src={user.profilePicture || "/assets/person/noAvatar.png"} alt="" className="postProfileImg" />
+            </Link>
+            <span className="postUsername">{user.username}</span> 
+            <span className="postDate">{format(postDetails.createdAt)}</span>
           </div>
           <div className="postTopRight">
             <MoreVertIcon/>
@@ -33,7 +46,7 @@ function Post({postDetails}) {
           <div className="postBottomLeft">
             <img className='likeIcon' onClick={handleLiked} src="/assets/like.png" alt="" />
             <img className='likeIcon' onClick={handleLiked} src="/assets/heart.png" alt="" />
-            <span className="postLikeCounter">{like}</span>
+            <span className="postLikeCounter">{like || 0}</span>
           </div>
           <div className="postBottonRight">
             <span className="postComment">{postDetails.comment}</span>

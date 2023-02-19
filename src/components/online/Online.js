@@ -1,4 +1,5 @@
 import './online.css'
+import React from "react"
 
 function Online({user}) {
   return (

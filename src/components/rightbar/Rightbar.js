@@ -1,6 +1,7 @@
 import Online from '../online/Online'
 import './rightbar.css'
 import { Users } from '../../dummyData'
+import React from "react"
 
 function HomeRightbar() {
   return (
@@ -12,28 +13,28 @@ function HomeRightbar() {
       <img src="/assets/ad.png" alt="" className="righbarAdImg" />
       <h4 className="rightbarTitle">Online Friends</h4>
       <ul className="rightbarFriendList">
-        {Users.map(u => <Online user={u} />)}
+        {Users.map((u,index) => <Online key={index} user={u} />)}
       </ul>
     </>
   )
 }
 
-const ProfileRightbar=()=>{
+const ProfileRightbar=({user})=>{
   return(
     <>
       <h4 className='rightbarTitle'>User Information</h4>
       <div className="rightbarInfo">
         <div className="rihgtbarInfoItem">
           <span className="rightabarInfoKey">city:</span>
-          <span className="rightabarInfoValue">Kochi</span>
+          <span className="rightabarInfoValue">{user.city}</span>
         </div>
         <div className="rihgtbarInfoItem">
           <span className="rightabarInfoKey">From:</span>
-          <span className="rightabarInfoValue">Kerala</span>
+          <span className="rightabarInfoValue">{user.from}</span>
         </div>
         <div className="rihgtbarInfoItem">
           <span className="rightabarInfoKey">Relationship:</span>
-          <span className="rightabarInfoValue">Single</span>
+          <span className="rightabarInfoValue">{user.ralationship===1 ? "Single" : user.ralationship===1 ? "Married" : "-" }</span>
         </div>
         </div>
         <h4 className='rightbarTitle'>User Friends</h4>
@@ -67,11 +68,11 @@ const ProfileRightbar=()=>{
   )
 }
 
-function Rightbar({profile}) {
+function Rightbar({user}) {
   return (
     <div className='rightbar'>
       <div className="rightbarWrapper">
-          {profile?<ProfileRightbar/>:<HomeRightbar/>}
+          {user?<ProfileRightbar user={user}/>:<HomeRightbar/>}
       </div>
     </div>
   )

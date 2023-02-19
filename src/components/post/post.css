@@ -21,6 +21,10 @@
     align-items: center;
 }
 
+.postLink{
+    text-decoration: none;
+}
+
 .postProfileImg{
     width: 32px;
     height: 32px;

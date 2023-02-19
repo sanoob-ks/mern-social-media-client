@@ -3,6 +3,7 @@ import Rightbar from "../../components/rightbar/Rightbar"
 import Sidebar from "../../components/sidebar/Sidebar"
 import Topbar from "../../components/topbar/Topbar"
 import  './home.css'
+import React from "react"
 
 
 function Home() {
