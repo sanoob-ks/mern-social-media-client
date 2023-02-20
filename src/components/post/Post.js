@@ -1,14 +1,20 @@
 import './post.css'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import axios from 'axios'
 import {format} from "timeago.js"
 import {Link} from "react-router-dom"
+import { AuthContext } from '../../context/AuthContext';
 function Post({postDetails}) {
   const [like,setLike]=useState(postDetails.like.length)
   const [isLiked,setIsLiked]=useState(false)
   const [user,setUser]=useState({})
+  const {user:currentUser}=useContext(AuthContext)
 
+  useEffect(()=>{
+    setIsLiked(postDetails.like.includes(currentUser._id))
+  },[currentUser._id,postDetails.like])
+  
   useEffect(()=>{
     const fetchUser=async()=>{
       const res=await axios.get(`/user?userId=${postDetails.userId}`)
@@ -18,7 +24,12 @@ function Post({postDetails}) {
     
   },[])
 
-  const handleLiked=()=>{
+  const handleLiked=async()=>{
+    try {
+      await axios.put(`/post/${postDetails._id}/like`,{userId:currentUser._id})  
+    } catch (err) {
+      alert(err.message)
+    }
     setLike(isLiked? like-1 :like+1)
     setIsLiked(!isLiked)
   }
@@ -40,7 +51,7 @@ function Post({postDetails}) {
         </div>
         <div className="postCenter">
           <span className="postText">{postDetails.desc}</span>
-          <img src={postDetails.photo} alt="" className="postImg" />
+          <img src={`/images/${postDetails.image}`} alt="" className="postImg" />
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">

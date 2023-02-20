@@ -1,12 +1,14 @@
 import './topbar.css'
-import React from "react"
+import React, { useContext } from "react"
 import PersonIcon from '@mui/icons-material/Person';
 import SearchIcon from '@mui/icons-material/Search';
 import ChatIcon from '@mui/icons-material/Chat';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 
 function Topbar() {
+    const {user}=useContext(AuthContext)
   return (
     <div className='container'>
         <div className="left">
@@ -39,7 +41,9 @@ function Topbar() {
                     <span className="topbarIconBadge">5</span>
                 </div>
             </div>
-            <img src="/assets/person/1.jpg" alt="" className="topbarImg" />
+            <Link to={`/profile/${user.username}`}>
+                <img src={user.profilePicture ? user.profilePicture :"/assets/person/noAvatar.png"} alt="" className="topbarImg" />
+            </Link>
         </div>
       
     </div>
