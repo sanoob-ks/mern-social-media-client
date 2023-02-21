@@ -18,8 +18,7 @@ function Profile() {
       setUser(res.data);
     }
     fetchUser()
-    
-  },[])
+  },[username])
 
   return (
     <div>

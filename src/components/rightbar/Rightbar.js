@@ -1,7 +1,10 @@
 import Online from '../online/Online'
 import './rightbar.css'
-import { Users } from '../../dummyData'
-import React from "react"
+import React, { useContext, useEffect, useState } from "react"
+import axios from 'axios'
+import { AuthContext } from '../../context/AuthContext'
+import { Link } from 'react-router-dom'
+import AddIcon from '@mui/icons-material/Add';
 
 function HomeRightbar() {
   return (
@@ -13,15 +16,34 @@ function HomeRightbar() {
       <img src="/assets/ad.png" alt="" className="righbarAdImg" />
       <h4 className="rightbarTitle">Online Friends</h4>
       <ul className="rightbarFriendList">
-        {Users.map((u,index) => <Online key={index} user={u} />)}
+        {/* {Users.map((u,index) => <Online key={index} user={u} />)} */}
       </ul>
     </>
   )
 }
 
 const ProfileRightbar=({user})=>{
+  const [friends,setFriends]=useState([])
+  const {user:currentUser}=useContext(AuthContext)
+  
+
+  useEffect(()=>{
+    const getFriends= async()=>{
+      try {
+        const friendList=await axios.get(`/friends/${currentUser._id}`)
+        console.log(friendList)
+        setFriends(friendList.data)
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getFriends();
+  },[currentUser._id])
   return(
     <>
+      {user.username !== currentUser.username && <button className="rightbarFollowButton">
+        follow<AddIcon/>
+      </button>}
       <h4 className='rightbarTitle'>User Information</h4>
       <div className="rightbarInfo">
         <div className="rihgtbarInfoItem">
@@ -39,30 +61,14 @@ const ProfileRightbar=({user})=>{
         </div>
         <h4 className='rightbarTitle'>User Friends</h4>
         <div className="rightbarFollowings">
-          <div className="rightbarFollowing">
-            <img src="/assets/person/1.jpg" alt="" className="rightbarFollowingImg" />
-            <span className="rightbarFollowingName">Mubashir B K</span>
-          </div>
-          <div className="rightbarFollowing">
-            <img src="/assets/person/2.jpeg" alt="" className="rightbarFollowingImg" />
-            <span className="rightbarFollowingName">Mubashir B K</span>
-          </div>
-          <div className="rightbarFollowing">
-            <img src="/assets/person/1.jpg" alt="" className="rightbarFollowingImg" />
-            <span className="rightbarFollowingName">Mubashir B K</span>
-          </div>
-          <div className="rightbarFollowing">
-            <img src="/assets/person/2.jpeg" alt="" className="rightbarFollowingImg" />
-            <span className="rightbarFollowingName">Mubashir B K</span>
-          </div>
-          <div className="rightbarFollowing">
-            <img src="/assets/person/1.jpg" alt="" className="rightbarFollowingImg" />
-            <span className="rightbarFollowingName">Mubashir B K</span>
-          </div>
-          <div className="rightbarFollowing">
-            <img src="/assets/person/2.jpeg" alt="" className="rightbarFollowingImg" />
-            <span className="rightbarFollowingName">Mubashir B K</span>
-          </div>
+          {friends.map(friend=>(
+          <Link to={`/profile/${friend.username}`} style={{textDecoration:'none'}}>
+            <div className="rightbarFollowing" key={friend._id}>
+              <img src={user.profilePicture ? `/images/${user.profilePicture}` : "/assets/person/noAvatar.png"} alt="" className="rightbarFollowingImg" />
+              <span className="rightbarFollowingName">{friend.username}</span>
+            </div>
+          </Link>
+          ))} 
         </div>
     </>
   )

@@ -9,7 +9,6 @@ import HelpIcon from '@mui/icons-material/Help';
 import WorkIcon from '@mui/icons-material/Work';
 import EventIcon from '@mui/icons-material/Event';
 import SchoolIcon from '@mui/icons-material/School';
-import {Users} from '../../dummyData'
 import Friend from '../friend/Friend';
 
 
@@ -58,7 +57,7 @@ function Sidebar() {
         <button className='sidebarButton'>Show More</button>
         <hr className='sidebarHr'/>
         <ul className="sidebarFriendList">
-            {Users.map(u=> <Friend key={u.id} user={u}/>)}
+            {/* {Users.map(u=> <Friend key={u.id} user={u}/>)} */}
         </ul>
       </div>
     </div>

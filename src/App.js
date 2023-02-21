@@ -17,7 +17,7 @@ function App() {
             <Route element={user ? <Home/> : <Register/>} path='/'/>
             <Route element={user ? <Navigate to="/" replace /> :<Register/>} path='/register'/>
             <Route element={user ?<Navigate to="/" replace /> : <Login/>} path='/login'/>
-            <Route element={<Profile/>} path='/profile/:username'/>
+            <Route element={user ? <Profile/> :<Navigate to="/login" replace />} path='/profile/:username'/>
         </Routes>
       </Router>
     </div>
