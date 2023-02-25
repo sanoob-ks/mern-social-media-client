@@ -6,6 +6,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios'
+import CancelIcon from '@mui/icons-material/Cancel';
 
 function Share() {
     const {user}=useContext(AuthContext)
@@ -44,10 +45,16 @@ function Share() {
                 <input placeholder={`what's in your mind ${user.username ? user.username : "Dear user"} ?`} type="text" name="" id="" className="shareTopInput" ref={desc}/>
             </div>
             <hr className="shareHr" />
+            {file && (
+                <div className="shareImgContainer">
+                    <img src={URL.createObjectURL(file)} className='shareImg' alt="" />
+                    <CancelIcon className='shareCancelIcon' onClick={()=>setFile(null)}/>
+                </div>
+            )}
             <form className="shareBottom" onSubmit={handleSubmit}>
                 <div className="shareOptions">
                     <label htmlFor='file' className="shareOption">
-                        <CollectionsIcon  htmlColor='tomato' className='shareOptionIcon'/>
+                        <CollectionsIcon  htmlColor='tomato' className ='shareOptionIcon'/>
                         <span className="shareOptionText">Photos or Videos</span>
                         <input style={{display:"none"}} type="file" id='file' accept='.png,.jpeg,.jpg' onChange={(e)=>setFile(e.target.files[0])}/>
                     </label>

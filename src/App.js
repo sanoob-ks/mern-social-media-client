@@ -5,6 +5,7 @@ import Register from "./pages/register/Register";
 import React, { useContext } from "react";
 import {BrowserRouter as Router, Routes,Route,Navigate} from 'react-router-dom'
 import { AuthContext } from "./context/AuthContext"
+import Messenger from "./pages/messenger/Messenger";
 
 
 
@@ -16,8 +17,9 @@ function App() {
         <Routes>
             <Route element={user ? <Home/> : <Register/>} path='/'/>
             <Route element={user ? <Navigate to="/" replace /> :<Register/>} path='/register'/>
-            <Route element={user ?<Navigate to="/" replace /> : <Login/>} path='/login'/>
             <Route element={user ? <Profile/> :<Navigate to="/login" replace />} path='/profile/:username'/>
+            <Route element={user ?<Navigate to="/" replace /> : <Login/>} path='/login'/>
+            <Route element={user ?<Navigate to="/" replace /> : <Messenger/>} path='/messenger'/>
         </Routes>
       </Router>
     </div>
