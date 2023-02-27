@@ -1,11 +1,27 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import './conversation.css'
 
-function Conversation() {
+function Conversation({conversation,currentUser}) {
+  const [user,setUser] = useState(null)
+
+  useEffect(()=>{
+    const friendId = conversation.members.find(m => m !== currentUser._id)
+    const getUser = async() => {
+      try {
+        const res = await axios.get("/user?userId="+friendId)
+        setUser(res.data) 
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getUser()
+  },[conversation,currentUser])
+
   return (
     <div className='conversation'>
-      <img src="https://im.rediff.com/sports/2023/feb/25murray2.jpg?w=670&h=900" alt="" className="conversationImg" />
-      <span className="conversationName">Andy Murray</span>
+      <img src={user ? user.profilePicture ? user.profilePicture : "/assets/person/noAvatar.png" : ""} alt="" className="conversationImg" />
+      <span className="conversationName">{user ? user.username : ""}</span>
     </div>
   )
 }

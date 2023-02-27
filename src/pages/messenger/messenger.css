@@ -1,5 +1,5 @@
 .messenger{
-    height: calc(100vh - 50px);
+    height: calc(100vh - 70px);
     display: flex;
 }
 
@@ -15,6 +15,7 @@
 }
 .chatBox{
     flex: 5.5;   
+    position: relative;
 }
 
 .chatBoxWrapper{
@@ -60,4 +61,13 @@
 .chatMenuWrapper, .chatBoxWrapper, .chatOnlineWrapper{
     padding: 10px;
     height: 100%; 
+}
+
+.noChatText{
+    position: absolute;
+    top: 10%;
+    font-size: 50px;
+    color: rgb(206, 204, 204);
+    text-align: center;
+    cursor: none;
 }

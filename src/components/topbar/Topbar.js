@@ -32,17 +32,21 @@ function Topbar() {
                     <PersonIcon/>
                     <span className="topbarIconBadge">2</span>
                 </div>
+                <Link to='/messenger' className='link'>
                 <div className="topbarIconItem">
-                    <ChatIcon/>
+                    <ChatIcon htmlColor='white'/>
                     <span className="topbarIconBadge">1</span>
                 </div>
+                </Link>
                 <div className="topbarIconItem">
                     <NotificationsIcon/>
                     <span className="topbarIconBadge">5</span>
                 </div>
             </div>
-            <Link to={`/profile/${user.username}`}>
-                <img src={user.profilePicture ? user.profilePicture :"/assets/person/noAvatar.png"} alt="" className="topbarImg" />
+            <Link to={`/profile/${user?user.username: ""}`}> 
+            {/* //NEED EDIT */}
+                <img src={user ? user.profilePicture :"/assets/person/noAvatar.png"} alt="" className="topbarImg" />
+                {/* //user.profilePicture */}
             </Link>
         </div>
       
